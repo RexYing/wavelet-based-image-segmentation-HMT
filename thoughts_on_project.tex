@@ -1,0 +1,198 @@
+\documentclass[11pt]{article}
+
+
+
+
+%------------------------------------------------------------------
+% PREAMBLE
+%------------------------------------------------------------------
+
+% -------------------- XeTeX vs TeX -------------------- %
+% ! COMMENT THIS SECTION OUT TO ALLOW COMPILATION WITH PDFLATEX
+% \usepackage[cm-default]{fontspec}
+%
+% \usepackage{xunicode}
+
+% \usepackage{xltxtra}
+
+% \defaultfontfeatures{Mapping=tex-text}
+
+% \setromanfont{CMUSerif}
+
+% \setsansfont{CMU Sans Serif}
+
+% \setmonofont{CMU Typewriter Text}
+
+
+
+
+% !UN-COMMENT THIS IF THE ABOVE ARE COMMENTED OUT !
+
+% !Also add the 'pdftex' option to packages 'xcolor' and 'hyperref'!
+
+
+\usepackage[utf8]{inputenc}
+
+% smaller margin
+\usepackage{fullpage}
+
+\input{packages}
+
+
+%------------------------------------------------------------------
+% Customization
+%------------------------------------------------------------------
+
+% no indent
+\setlength\parindent{0pt}
+
+% define includegraphics search path
+\graphicspath{{ figs/}{figs/pdf/}{../code/}}
+
+% specify font formatting for listings
+\lstset{basicstyle=\footnotesize\ttfamily}
+
+% force newly defined floats to be ruled
+\floatstyle{ruled}
+
+% create a 'code' float
+\newfloat{code}{tbp}{loc}[section]
+\floatname{code}{Code}
+\captionsetup[code]{font={small,color=darkgray},labelfont=bf,hypcap=true}
+
+% prefix equations, figures and tables with the section number
+\numberwithin{equation}{section}
+\numberwithin{figure}{section}
+\numberwithin{table}{section}
+\numberwithin{code}{section}
+
+% define theorems, lemmas and corollaries and make them have contiguous
+% numbers
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+
+% easy command for resetting counters when using section*
+\newcommand{\resetcounters}{
+  \setcounter{subsection}{0}
+  \setcounter{subsubsection}{0}
+  \setcounter{equation}{0}
+  \setcounter{figure}{0}
+  \setcounter{table}{0}
+  \setcounter{code}{0}
+}
+
+% easy command for boldface math symbols
+\newcommand{\mbs}[1]{\boldsymbol{#1}}
+
+% define a dark gray color to be used in captions
+\definecolor{darkgray}{rgb}{0.25,0.25,0.25}
+
+% define the program float reference abbreviations
+\crefname{code}{code}{codes}
+
+% initial header and footer configuration
+\setlength{\headheight}{15.2pt}
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhf{}
+\pagestyle{fancyplain}
+
+% redefine 'plain' header style to only contain page number; this is
+% automatically applied to new \maketitle or \chapter pages
+\fancypagestyle{plain}{%
+  \renewcommand{\headrulewidth}{0pt}%
+  \fancyhf{}%
+  \fancyfoot[C]{\thepage}%
+}
+
+% customize header and footer contents
+\fancyhead[L]{\fancyplain{} Rex Ying}
+\fancyhead[R]{\fancyplain{} Differential Geometry}
+\fancyfoot[C]{\thepage}
+
+% words with accents that are annoying to type
+\newcommand{\naive}{na\"{i}ve}
+\newcommand{\visavis}{vis-\`a-vis}
+\newcommand{\matlab}{\textsc{Matlab}}
+
+% math operators
+\DeclareMathOperator{\colspan}{colspan}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\conv2}{\ast\ast}
+\DeclareMathOperator{\corr2}{\star\star}
+
+% language-specific hyphenation blocks
+\newcommand{\en}[1]{\begin{english}#1\end{english}}
+ 
+%--------------------------------------------------------------------
+% Title
+%--------------------------------------------------------------------
+
+\title{\textbf{Digital Image Processing Project}}
+
+\author{Rex Ying%
+  \thanks{Undergraduate student, Department of Computer Science, Duke
+  University, Durham, NC 27708.}\\
+  \href{mailto:zy26@cs.duke.edu}{\texttt{zy26@cs.duke.edu}}
+}
+
+\date{\today}
+
+
+%--------------------------------------------------------------------
+% Document
+%--------------------------------------------------------------------
+
+\begin{document}
+
+\maketitle
+\onehalfspacing
+
+% \label{sec:abstract}
+% \phantomsection
+% \addcontentsline{toc}{section}{Abstract}
+
+Tentative project title: Use of wavelets in image processing on a group of similar images \\
+
+The paper I found relates to texture detection and image segmentation based on wavelet-domain information.
+The paper \emph{Image processing with complex wavelets} also talks about the limitations of using wavelets
+transform, including shift dependence, as opposed to the property of Fourier transform. 
+"Real DWTs are unlikely to
+give consistent results when used to detect key features in images". 
+The paper then presents the advantages of complex wavelets and how it could solve 2 main problems of DWT.
+The other paper 
+\emph{Multiscale Image Segmentation Using Wavelet-Domain Hidden Markov Models} has introduced a way to
+use training data to solve this problem, among other uses. 
+In lots of applications, the number of images is abundant, so I would like to explore if this can be used
+to a significant advantage in terms of processing in wavelet domain.
+The first paper envisions a range of applications
+of the processing technique including motion estimation, denoising, texture analysis and synthesis, and object segmentation, but it only gives a single denoising example.
+ I would like to try out segmentation in different context and assess its usefulness. \\
+
+I also will have an internship with Google Maps this summer, so I will try to explore if this topic 
+has relevance in terms of analysing and processing large amount of similar street views and satellite views. \\
+
+Reference paper:
+
+Kingsbury, Nick. "Image processing with complex wavelets." Philosophical Transactions of the Royal Society of London. Series A: Mathematical, Physical and Engineering Sciences 357, no. 1760 (1999): 2543-2560.
+
+Hyeokho Choi; Baraniuk, R.G., "Multiscale image segmentation using wavelet-domain hidden Markov models," Image Processing, IEEE Transactions on , vol.10, no.9, pp.1309,1321, Sep 2001
+
+
+
+%--------------------------------------------------------------------
+% References
+%--------------------------------------------------------------------
+
+\bibliographystyle{plainnat}
+
+\label{sec:references}
+\phantomsection
+\addcontentsline{toc}{section}{References}
+\bibliography{@@Bib-file@@}
+
+\end{document}
+
+
+
