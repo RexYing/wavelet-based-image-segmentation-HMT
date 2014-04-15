@@ -6,7 +6,9 @@ hh = daubcqf(4);  %wavelet filter
 
 x = lena + sigma*randn(size(lena));
 disp(['PSNR of noisy image is ' num2str(psnr(lena,x)) 'dB']);
-y=hdenoise(x,hh,[],ES,PS,MU,SI);
+% the option is empty: default options
+%y=hdenoise(x,hh,[],ES,PS,MU,SI);
+y=hdenoise(x,hh,[]);
 disp(['PSNR of denoised image is ' num2str(psnr(lena,y)) 'dB']);
 figure(1);
 image(x*255+1);

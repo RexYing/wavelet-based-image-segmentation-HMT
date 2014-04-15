@@ -7,13 +7,14 @@ function [ES, PS, MU, SI] = hmtmodel(N)
 % Usuage : [ES, PS, MU, SI] = hmtmodel(N)
 % n : size of image. The generated model is for nxn square image
 %
-% ES : Structure that holds the transistion matrices, dimension 2x2xNxN
+% ES : Structure that holds the transition matrices, dimension 2x2xNxN
 % PS : The mixture probabilities for the wavelet coefficients, dimension
-%      2XNxN
+%      2xNxN
 % MU : The means of the mixture components, (all 0), dimension 2xNxN
 % SI : the variances of the mixture components, dimension 2xNxN
 %
-
+% In the same scale, the values are the same
+%
 lev = log2(N);
 es = zeros(2,2,lev);
 ps = zeros(2,lev);
@@ -32,12 +33,13 @@ JJ = 1:lev;
 si(1,:) = 2^(C1_sm)*2.^(-alpha_sm*JJ);
 si(2,:) = 2^(C1_big)*2.^(-alpha_big*JJ);
 
-% Transition matrices have p00->1 and p11->.5
+% Transition matrices have p00->1 and p11->.5 asymptotically
 p00(1:3) = 1;
 p00(4:lev) = .8 + .2*(1-2.^-(beta*(0:lev-4)));
 p11(1:3) = 1;
 p11(4:lev) = .9 - .4*(1-2.^-(beta*(0:lev-4)));
 p10 = 1 - p00;
+% asymptotically, [1, 0.5; 0, 0.5]
 for ii = 1:lev
   es(2,2,ii) = p11(ii);
   es(2,1,ii) = p10(ii);
@@ -52,8 +54,8 @@ for ii = 2:lev
   ps(:,ii) = es(:,:,ii)*ps(:,ii-1);
 end
 
-[ES, PS, MU, SI] = vec2mat(es,es,es,si,si,si,mu,mu,mu,si,si,si);
-
+%[ES, PS, MU, SI] = vec2mat(es,es,es,si,si,si,mu,mu,mu,si,si,si);
+[ES, PS, MU, SI] = vec2mat(es,es,es,ps,ps,ps,mu,mu,mu,si,si,si);
 
 
 

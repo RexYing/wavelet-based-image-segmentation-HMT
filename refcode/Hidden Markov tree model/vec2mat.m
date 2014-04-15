@@ -19,6 +19,9 @@ for ii = 1:L
   lrow = 1:(2^(ii-1));
   lcol = (2^(ii-1)+1):(2^ii);
   
+  % fill top-right, top-left, and bottom right in each scale
+  % the result is the classical arrangement of the wavelet decomposition of
+  % an image
   ES(:,:,lrow,lcol) = repmat(ESl(:,:,ii),[1,1,2^(ii-1),2^(ii-1)]);
   ES(:,:,lcol,lcol) = repmat(ESm(:,:,ii),[1,1,2^(ii-1),2^(ii-1)]);
   ES(:,:,lcol,lrow) = repmat(ESr(:,:,ii),[1,1,2^(ii-1),2^(ii-1)]);

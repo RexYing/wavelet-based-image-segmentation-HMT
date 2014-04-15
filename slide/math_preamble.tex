@@ -1,0 +1,93 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% MATH ONLY
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% substitute
+\usepackage{xstring}
+\def\replaceStr#1{%
+  \IfSubStr{#1}{,}{%
+    \StrSubstitute{#1}{beingSubstituted}{desired}
+  }{#1}
+}
+
+% Column vectors (any number of arguments)
+% gives error in texclipse because of the pmatrix pair!
+% \newcount\colveccount
+% \newcommand*\colvecn[1]{
+%         \global\colveccount#1
+%         \begin{pmatrix}
+%         \colvecnext
+% }
+% \def\colvecnext#1{
+%         #1
+%         \global\advance\colveccount-1
+%         \ifnum\colveccount>0
+%           \\
+%           \expandafter\colvecnext
+%         \else
+%            \end{pmatrix}
+%         \fi
+% }
+\usepackage{bm}
+% ========= Vectors and matrices ===================
+%
+% Comment out to use arrow as vector notation
+\renewcommand{\vec}[1]{\mathbf{#1}}
+%\renewcommand{\vec}[1]{\bm{#1}}
+%\renewcommand{\vec}[1]{\boldsymbol #1}
+\newcommand{\colvec}[1]{\begin{pmatrix} #1 \end{pmatrix}}
+% Matrix does not use bold now 
+\newcommand{\mat}[1]{#1}
+%\newcommand{\mat}[1]{\mathbf{#1}}
+% transpose
+\newcommand{\trsp}{^T}
+
+% ========== Common sets ===========================
+\newcommand{\real}{\mathbb{R}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\nat}{\mathbb{N}}
+\newcommand{\integer}{\mathbb{Z}}
+
+% derivative
+\newcommand{\pder}[2]{\frac{\partial#1}{\partial#2}}
+\newcommand{\pderop}[1]{\frac{\partial}{\partial#1}}
+\newcommand{\der}[2]{\frac{\mathrm{d}#1}{\mathrm{d}#2}}
+\newcommand{\derop}[1]{\frac{\mathrm{d}}{\mathrm{d}#1}}
+\newcommand{\secpder}[3]{\frac{\partial^2 #1}{\partial #2 \partial #3}}
+\newcommand{\npder}[3]{\frac{\partial^{#3} #1}{\partial #2^{#3} }}
+\newcommand{\nder}[3]{\frac{\mathrm{d}^{#3} #1}{\mathrm{d} #2^{#3} }}
+
+% equal by definition
+\usepackage{mathtools}
+\newcommand{\defeq}{\vcentcolon=}
+
+% ============= Norm ==============================
+%
+% usage: \norm{ \biggl(\sum_{n=1}^N \mathbf{P}_{n}\biggr) }
+\newcommand{\norm}[1]{\left\lVert#1\right\rVert}
+
+% ===============Functions ========================
+%
+% Trigo
+%
+\newcommand{\sech}{\, \mathrm{sech} \,}
+\newcommand{\sinc}{\, \mathrm{sinc} \,}
+
+
+% math operators
+\DeclareMathOperator{\colspan}{colspan}
+\DeclareMathOperator{\rank}{rank}
+\DeclareMathOperator{\conv2}{\ast\ast}
+\DeclareMathOperator{\corr2}{\star\star}
+% argmin/max
+\DeclareMathOperator*{\argminOp}{argmin}
+\DeclareMathOperator*{\argmaxOp}{argmax}
+\newcommand*{\argmin}{\argminOp\limits}
+\newcommand*{\argmax}{\argmaxOp\limits}
+
+% =================== Fancy =======================
+% Fourier transform operator
+\DeclareMathOperator{\FT}{\mathfrak{F}}
+

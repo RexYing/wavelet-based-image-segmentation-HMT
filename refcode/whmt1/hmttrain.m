@@ -18,16 +18,21 @@ function [ES,PS,MU,SI] = hmttrain(w,M,epsilon)
 P = size(w,1);
 level = log2(P); %no. of levels of tree
 
+% transition
 ES=zeros(M,M,P,P);
+% probability of hidden states
 PS=zeros(M,P,P);
+% all means of diff Gaussian functions in the mixture
 MU=zeros(M,P,P);
+% variance
 SI=ones(M,P,P);
 
-%initialization of model
+% initialization of model
 for k=1:level
  J = 2^(k-1); J2 = J*J;
 
  % HH subband
+ % diagonal
  si=J+1; ei=2*J;
  sj=J+1; ej=2*J;
  mutemp = 0.0;
@@ -38,6 +43,7 @@ for k=1:level
  PS(:,si:ei,sj:ej)=repmat(ones(M,1)/M, [1 2^(k-1) 2^(k-1)]);
 
  % LH subband
+ % vertical
  si=1; ei=J;
  sj=J+1; ej=2*J;
  mutemp = 0.0;
@@ -48,6 +54,7 @@ for k=1:level
  PS(:,si:ei,sj:ej)=repmat(ones(M,1)/M, [1 2^(k-1) 2^(k-1)]);
 
  % HL subband
+ % horizontal
  si=J+1; ei=2*J;
  sj=1; ej=J;
  mutemp = 0.0;

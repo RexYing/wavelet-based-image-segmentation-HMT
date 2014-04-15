@@ -7,7 +7,7 @@ imshow(img, [0 255]);
 wname = 'haar';
 % lowpass, horizontal detail, vertical detail, diagonal detail
 %[CA, CH, CV, CD] = dwt2(img, wname, 'mode', 'sym');
-lvl = 6;
+lvl = 5;
 [wc,s] = wavedec2(img, lvl, wname);
 
 %% analyze wavelet coefficients
@@ -15,11 +15,11 @@ h = cell([1, lvl]);
 v = cell([1, lvl]);
 d = cell([1, lvl]);
 for i = 1: lvl
-    h{i} = detcoef2('h',wc,s,1);
-    v{i} = detcoef2('v',wc,s,1);
-    d{i} = detcoef2('d',wc,s,1);
+    h{i} = detcoef2('h',wc,s,i);
+    v{i} = detcoef2('v',wc,s,i);
+    d{i} = detcoef2('d',wc,s,i);
 end
 
-hist(h{lvl}, 100);
+hist(h{1}, 100);
 %hist(v{lvl}, 100);
 %hist(d{lvl}, 100);

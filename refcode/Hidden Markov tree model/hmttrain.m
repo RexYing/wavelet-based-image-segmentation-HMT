@@ -12,6 +12,10 @@ function [ES,PS,MU,SI] = hmttrain(w,M,epsilon)
 % MU : MxPxP matrix
 % SI : MxPxP matrix
 
+if nargin < 3
+    epsilon = 1e-5;
+end
+
 P = size(w,1);
 level = log2(P); %no. of levels of tree
 
