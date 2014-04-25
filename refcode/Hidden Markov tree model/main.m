@@ -20,3 +20,6 @@ image(y*255+1);
 colormap(gray(256));
 axis square;
 title('Denoised image');
+
+bf_result = fast_bilateral_filter(x, 1, 1);
+imshow(bf_result);

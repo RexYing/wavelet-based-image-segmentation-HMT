@@ -22,6 +22,7 @@ function [ESN,PSN,MUN,SIN]=emhht(w,ES,PS,MU,SI,zm)
 %
 % Output:
 % Updated ES PS MU SI in ESN PSN MUN SIN
+% BE: optional output: \beta_i(m)
 
 M=size(ES,1);
 P=size(w,1);

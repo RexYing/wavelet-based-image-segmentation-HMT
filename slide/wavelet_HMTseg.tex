@@ -7,6 +7,11 @@
 \usepackage[utf8]{inputenc}
 \usepackage{pgf,pgfarrows,pgfnodes,pgfautomata,pgfheaps,pgfshade}
 \usepackage{verbatim}
+
+\usepackage[font={small,color=darkgray},labelfont=bf,hypcap=true]{caption}
+% does not work in beamer
+%\usepackage[font={footnotesize,color=darkgray},labelfont=bf,hypcap=true]{subcaption}
+
 \input{math_preamble}
 % \usepackage{enumitem}
 % \setlist[itemize,2]{label={$\star$}}
@@ -74,96 +79,171 @@
 \section{Introduction}
 
 \begin{frame}
-  \frametitle{Prerequisites \& Goals}
-  \framesubtitle{Knowledge is a brick wall that you raise line by line forever}
-  \begin{block}{LaTeX}
+  \frametitle{Objectives}
+  \framesubtitle{types of segmentation}
+  \begin{block}{}
   \begin{itemize}
-    \item Obviously some basic LaTeX knowledge is necessary
-    \item Some more features will be provided here
+    \item Segmenting textures (possibly noisy)
+    \item Properties of textures in general: space invariant, high pass
   \end{itemize}
   \end{block}
-
-  \begin{block}{Beamer}
-  \begin{itemize}
-    \item You'll learn them by looking at this presentation source
-  \end{itemize}
-  \end{block}
-
-  \begin{block}{Goal}
-  \begin{itemize}
-    \item Learn how to make well structured slides
-    \item Using a beautiful theme (congrats to the Oxygen team!)
-    \item Take over the world
-    \item Relax...
-  \end{itemize}
-  \end{block}
-\end{frame}
-
-\section{Basic structuring}
-\begin{frame}
-  \frametitle{Sections, Frames and Blocks}
-  \framesubtitle{Put everything into boxes}
-
-  The current section is "Basic structuring". And the current frame
-  is what you have on the screen right now.
-
-  \begin{block}{A beautiful block}
-  A block has a title, and some content. You can put in a block
-  almost everything you want that is provided by LaTeX. For example
-  math works as usual:
-    \begin{equation}
-    \sum_{i=1}^n i = \frac{n \times (n+1)}{2}
-    \end{equation}
-  \end{block}
-
-  Also works outside a block:
-  \begin{equation}
-  \sum_{i=1}^n i^2 = \frac{n \times (n+1) \times (2n+1)}{6}
-  \end{equation}
+  
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.2]{../data/glass/glass1_t0}
+  \label{fig:glass_texture}
+  \caption{Example of texture }
+  \end{figure}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Different type of blocks}
-  \framesubtitle{Weeeee! Colors!!}
+  \frametitle{Prerequisites \& Assumptions}
+  \framesubtitle{Discrete Wavelet Transform}
+  \begin{block}{Properties of wavelet coefficients}
+  \begin{itemize}
+    \item Distribution of wavelet coefficients in general is heavily tailed
+    \item Heisenberg uncertainty principle: time / frequency tradeoff
+    \item Interscale and intrascale relations
+  \end{itemize}
+  \end{block}
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.15]{../figs/theory/hist_wavelet_coefs}
+  \label{fig:hist_wavelet_coefs}
+  \caption{Example of wavelet coefficients distribution}
+  \end{figure}
+\end{frame}
+
+\section{Theory}
+\begin{frame}
+  \frametitle{Modeling wavelet coefficients}
+  \framesubtitle{Mixed Gaussian}
+  
+  It is the wavelet coefficient, instead of scaling coefficient, that is of more
+  importance.
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.5]{../figs/theory/mixed_gaussian}
+  \label{fig:hist_wavelet_coefs}
+  \caption{Example of wavelet coefficients distribution}
+  \end{figure}
+  Parameters:
+  $$
+    \mu_s, \sigma_s, \mu_l, \sigma_l
+  $$
+  But why a mixture of TWO Gaussian?
+\end{frame}
+
+\begin{frame}
+  \frametitle{Determination of parameters}
+  \framesubtitle{using information from the entire wavelet tree}
   \begin{block}{Standard block}
   \begin{itemize}
-    \item A standard block, used for grouping
-    \item Obviously can contain itemizes too...
+    \item What is tempting: independent assumption
+    \item In real world: coefficients are correlated
+    \item Markov models
     \begin{itemize}
-      \item And nested itemizes...
-      \item of course!
+      \item Markov chains
+      \item Markov trees
     \end{itemize}
   \end{itemize}
-  \end{block}
-  \begin{alertblock}{Alert block}
-  WARNING: Something very important inside this block!
-  \end{alertblock}
-  \begin{example}
-  Note that examples are displayed as a special block...
-  \end{example}
+  \end{block}   
 \end{frame}
 
-\section{Fancy features}
-\begin{frame}
-  \frametitle{Highlighting}
-  \framesubtitle{Hey! Look here! here!}
+% \begin{frame}
+%   \frametitle{Determination of parameters}
+%   \framesubtitle{Notion of dyadic squares}
+%   
+%   \begin{figure}[h!]
+%   \begin{subfigure}[t]{0.4\textwidth}
+% 	\centering
+% 	\includegraphics[width=\textwidth]{../figs/theory/wavelet_coefs}
+% 	\caption{Wavelet coefficients }
+% 	\label{fig:wavelet_coefs}
+%   \end{subfigure}
+%   \begin{subfigure}[t]{0.4\textwidth}
+% 	\centering
+% 	\includegraphics[width=\textwidth]{../figs/theory/wavelet_coefs_tree}
+% 	\caption{Tree structure }
+% 	\label{fig:wavelet_coefs_tree}
+%   \end{subfigure}
+%   \end{figure}
+%   
+% \end{frame}
 
-  \begin{block}{A regular block}
+\begin{frame}
+  \frametitle{Determination of parameters}
+  \framesubtitle{using information from the entire wavelet tree}
+
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{../figs/theory/hmt}
+  \label{fig:hmt}
+  \caption{Hidden Markov Tree}
+  \end{figure} 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Determination of parameters}
+  \framesubtitle{using information from the entire wavelet tree}
+  
+  \begin{alertblock}{Very important assumption}
   \begin{itemize}
-    \item Normal text
-    \item \highlighttext{Highlighted text} to draw attention
-    \item \alert{"Alert'ed" text} to spot very important information
-    \item Alternatively you can
-    \begin{itemize}%[label=$\star$]
-      \alert{\item ``Alert'' the item itself}
-      \highlighttext{\item Or ``Highlight'' it}
-    \end{itemize}
+    \item The state ($s$ or $l$) directly determines the distribution of coefficients.
+    \item The states are correlated across scale, NOT the wavelet coefficients.
+    \item Given the state, the subtree rooted at a node of the tree is independent from
+    the rest of the tree
+  \end{itemize}  	
+  \end{alertblock}
+ 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Hidden Markov Tree Model}
+  \framesubtitle{Parameters}
+  
+  \begin{block}{Very important assumption}
+  \begin{itemize}
+    \item $\epsilon^{\rho(i), m}_{i, n} $: conditional probability $P(S(i) = n |
+    S(\rho(i)) = m)$ The transition stochastic matrix (properties?):
+     $$ \begin{bmatrix}
+       \epsilon^{\rho(i), s}_{i, s} & 1 - \epsilon^{\rho(i), s}_{i, s} \\
+       1 - \epsilon^{\rho(i), l}_{i, l} & \epsilon^{\rho(i), l}_{i, l}
+     \end{bmatrix} $$
+    \item ${P_S}_i(m) = P(S(i) = m)$: state probabilities
+    \item $\mu_i(m)$: mean of Gaussian in state $m$
+    \item $\sigma_i(m)$: standard deviation of Gaussian in state $m$
+  \end{itemize}  	
+  \end{block}
+\end{frame}
+  
+\begin{frame}
+  \frametitle{Hidden Markov Tree Model}
+  \framesubtitle{Within and between wavelet tree tying}
+  
+  \begin{block}{Tying}
+  \begin{itemize}
+    \item Noise
+    \item A huge number of wavelet coefficients
+    \item Overfitting and robustness
+    \item On the same level, $3$ sets of coefficients would suffice
+  \end{itemize}  	
+  \end{block}
+ 
+\end{frame}
+
+\section{Technical aspects}
+\begin{frame}
+  \frametitle{Choice of wavelet}
+
+  \begin{block}{A desired wavelet}
+  An ``eligible'' wavelet should at least have the property of detecting edges.
+  \begin{itemize}
+    \item Haar
+    \item Daubechies 4-tap wavelet
+    \item Gabor wavelet
   \end{itemize}
   \end{block}
-  \begin{alertblock}{If it's very very important...}
-  \alert{... you can "alert" in an "alertblock"} \\
-  Ewww, nasty, heh?
-  \end{alertblock}
 \end{frame}
 
 \newcommand{\putlink}[1]{%
@@ -173,8 +253,8 @@
 }
 
 \begin{frame}
-  \frametitle{Overlay effects}
-  \framesubtitle{Keep the suspense!}
+  \frametitle{Steps}
+  
   \begin{block}{Time bomb}
 %   \begin{enumerate}
 %     \item<2-> Two more to go
@@ -183,31 +263,185 @@
 %     \item<5-> BOOM!
 %   \end{enumerate}
    \begin{enumerate}
-    \item Two more to go \pause
-    \item One more to go \pause
-    \item Last chance... \pause
-    \item BOOM! \pause
+    \item Training using labeled data (images) to obtain the HMT model \pause
+    \item Find the likelihood of the image given models for each texture \pause
+    \item Optimization techniques (inter and intra-scale fusion) \pause
   \end{enumerate}
   \end{block}
-   \begin{block}{"Animation"}<6->
-    \begin{pgfpicture}{0cm}{0cm}{7cm}{2cm}
-    \only<1-6>{
-      \putlink{2}
-    }
-    \only<7>{
-      \putlink{4}
-    }
-    \only<8>{
-      \putlink{6}
-    }
-    \only<9>{
-      \putlink{8}
-    }
-    \only<10>{
-      \putlink{10}
-    }
-    \end{pgfpicture}
-   \end{block}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Training}
+  \framesubtitle{Expectation maximization algorithm}
+  
+  \begin{block}{Rationale}
+    \begin{itemize}
+      \item Iterative methods
+	  \item Jensen's inequality
+	  \item Arithmetic-geometric inequality
+	  \item Maximize log-likelihood $L(\theta) = \ln P(\vec{X} | \theta)$
+	\end{itemize}
+  \end{block}
+  
+  \begin{align*}
+    & L(\theta) - L(\theta_n) = \ln \sum_\vec{z} P(\vec{X} | \vec{z}, \theta) P(\vec{z} |
+    \theta) - \ln P(\vec{x} | \theta) \\
+    & L(\theta) - L(\theta_n) \ge \sum_\vec{z} P(\vec{z} | \vec{X}, \theta_n) \ln \left(
+    \frac{P(\vec{X} | \vec{z}, \theta) P(\vec{z} | \theta)}{P(\vec{z} | \vec{X}, \theta_n)
+    P(\vec{X} | \theta_n)} \right)
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Training}
+  \framesubtitle{Expectation maximization algorithm}
+  
+  A fixed point iteration:
+  \begin{align*}
+    & L(\theta_n) + \Delta(\theta_n | \theta_n) = L(\theta_n)
+  \end{align*}
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.7]{../figs/theory/em_graph_interpretation}
+  \label{fig:em_graph_interpretation}
+  \caption{Graphical interpretation of EM}
+  \end{figure} 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Training}
+  \framesubtitle{Expectation maximization algorithm}
+  
+  \begin{block}{EM steps}
+    Expectation step:
+    $$ P(\vec{S} | \vec{w}, \bm{\theta}_k) $$
+    $$ P(S_i = m, \mathcal{T}_1 | \theta) = P(\mathcal{T}_i | S(i) = m, \bm{\theta})
+    \times P(\mathcal{T}_{1 \backslash i}, S(i) = m | \bm{\theta})
+    $$
+    Multitree\ldots
+    
+    \pause
+    Maximization step: (amazingly it is easier)
+    $$ \argmax_{\bm{\theta}} E_S \left[ \ln P(\vec{w}, \vec{S} | \bm{\theta}) |
+    \vec{w}, \bm{\theta}_k \right] $$
+    
+    \pause
+    Increment $k$, until convergence.
+  \end{block}
+\end{frame}
+
+\section{Performance}
+\begin{frame}
+  \frametitle{Data}
+  \framesubtitle{Types of textures}
+  
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{../data/mytest/test1}
+  \label{fig:test1}
+  \caption{A test image}
+  \end{figure} 
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Data}
+  \framesubtitle{Types of textures}
+  
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{../data/tm1_1_1}
+  \label{fig:tm1_1_1}
+  \caption{A test image}
+  \end{figure} 
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Result}
+  \framesubtitle{Raw segmentation}
+  
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{../figs/raw_seg_k=4}
+  \label{fig:tm1_1_1}
+  \caption{Raw segmentation at 16-by-16 dyadic squares}
+  \end{figure} 
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Result}
+  \framesubtitle{Raw segmentation}
+  
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{../figs/raw_seg_k=7}
+  \label{fig:tm1_1_1}
+  \caption{Raw segmentation at 2-by-2 dyadic squares}
+  \end{figure} 
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Result}
+  \framesubtitle{Segmentation after fusion}
+  
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.3]{../figs/fused_seg_k=5}
+  \label{fig:tm1_1_1}
+  \caption{Raw segmentation at 2-by-2 dyadic squares}
+  \end{figure} 
+  
+\end{frame}
+
+\begin{frame}
+  \frametitle{Deal with noise}
+  \framesubtitle{HMT denoising}
+  
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{../figs/lena_noisy}
+  \label{fig:lena_noisy}
+  \caption{Noisy Lena}
+  \end{figure} 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Deal with noise}
+  \framesubtitle{HMT denoising}
+  
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{../figs/lena_denoised_hmt}
+  \label{fig:lena_denoised_hmt}
+  \caption{Denoised using HMT}
+  \end{figure} 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Deal with noise}
+  \framesubtitle{HMT denoising}
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{../figs/lena_denoised_wavelet_thresholding}
+  \label{fig:lena_denoised_wavelet_thresholding}
+  \caption{Denoised by applying Donoho-Johnstone universal threshold on wavelet
+  coefficients}
+  \end{figure} 
+\end{frame}
+
+\begin{frame}
+  \frametitle{Deal with noise}
+  \framesubtitle{HMT denoising}
+  
+  \begin{figure}[H]
+  \centering
+  \includegraphics[scale=0.35]{../figs/lena_denoised_gaussian}
+  \label{fig:lena_denoised_gaussian}
+  \caption{Denoised using Gaussian kernel}
+  \end{figure} 
 \end{frame}
 
 \section*{}
@@ -215,51 +449,42 @@
   \vfill
   \centering
   \highlighton{
-  \usebeamerfont*{frametitle}And now?
+  \usebeamerfont*{frametitle} So\ldots
 
-  \usebeamerfont*{framesubtitle}Enter the secret section
-  }
+  \usebeamerfont*{framesubtitle} This project involves quite a number of things that I
+  have not touched }
   \vfill
 }
 \begin{frame}
-  \frametitle{Contributing to this beamer style}
-  \framesubtitle{We want you !}
-
-  \begin{block}{Why?}
-  \begin{itemize}
-    \item Beamer is hot!
-    \item This style deserves to be improved
+  \frametitle{Other aspects, TODOs }
+  
+  \begin{example}
+    \begin{itemize}
+    \item single pixel level segmentation
+    \item Inter and intra-scale fusion
+    \item Choice of wavelet levels
   \end{itemize}
-  \end{block}
+  \end{example}
 
-  \begin{block}{How?}
+  \begin{block}{TODO}
   \begin{itemize}
-    \item Grab it
-    \item Improve its LaTeX code
-    \item Use you artistics skills
-    \item Document it
-    \item Help other people to use it
-    \item Use it...
+    \item A better understanding of performance limitations
+    \item Investigate effects of different wavelet basis representations
+    \item Nice procedure for segmenting noisy images
+    \item Combination with other segmentation techniques
   \end{itemize}
   \end{block}
 \end{frame}
 
 \begin{frame}
-  \frametitle{Resources}
-  \framesubtitle{If you want to improve this style}
-  \begin{thebibliography}{10}
-
-  \beamertemplatearticlebibitems
-
-  \bibitem{beamer-homepage}
-    LaTeX Beamer
-    \newblock {\tt http://latex-beamer.sourceforge.net/}
-
-  \bibitem{kdeslides}
-    KDE Presentations
-    \newblock {\tt http://www.kde.org/kdeslides/}
-
-  \end{thebibliography}
+  \frametitle{Further exploration }
+  \begin{block}{Further exploration}
+  \begin{itemize}
+    \item Better scheme for choosing wavelet levels
+    \item Un-supervised learning
+    \item Analysis of multiscale classification errors
+  \end{itemize}
+  \end{block}
 \end{frame}
 
 \frame{
@@ -268,9 +493,9 @@
 
   \vspace{3cm}
   \begin{flushright}
-    Konqi Konqueror
+    Rex Ying
 
-    \structure{\footnotesize{konqi@kde.org}}
+    \structure{\footnotesize{zy26@duke.edu}}
   \end{flushright}
 }
 

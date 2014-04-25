@@ -4,12 +4,15 @@
 % color palette, map, which maps each value of the matrix to a
 % color.  Here, we will apply the Discrete Wavelet Transform to X.
 load woman2
+% load lena
+X = x * 255;
 %load detfingr; X = X(1:200,51:250);
 
 close all
 clf
 image(X)
-colormap(map)
+%colormap(map)
+colormap('gray');
 axis image; set(gca,'XTick',[],'YTick',[]); title('Original')
 pause
 
@@ -110,6 +113,12 @@ sprintf('Reconstruction error (using waverec2) = %g', max(max(abs(X-XXhat))))
 thr = 20;                                                    
 [X_comp,wc_comp,s_comp,perf0,perfL2] = wdencmp('gbl',wc,s,wname,2,thr,'h',1);
 
+%% Denoise
+[thr,sorh,keepapp] = ddencmp('den','wv',X);
+xd = wdencmp('gbl',X,'sym4',2,thr,sorh,keepapp);
+imshow(xd, [0, 255]);
+
+%%
 clf
 subplot(1,2,1); image(X); axis image; set(gca,'XTick',[],'YTick',[]);
 title('Original')
